@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<title>Esthetics & Nails</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="en.css">
+
+<style>
+body {
+background-color: #F5F5F5;
+font-family: "Lato", sans-serif}
+.mySlides {display: none}
+
+.parallax {
+    /* The image used */
+    background-image: url('Zen.jpg');
+
+    /* Full height */
+    height: 100%; 
+
+    /* Create the parallax scrolling effect */
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+</style>
+<body>
+<!--Php code for form-->
+<?php
+if(!isset($_POST['submit']))
+{
+	//This page should not be accessed directly. Need to submit the form.
+	echo "error; you need to submit the form!";
+}
+$name = $_POST['name'];
+$visitor_email = $_POST['email'];
+$message = $_POST['message'];
+
+//Validate first
+if(empty($name)||empty($visitor_email)) 
+{
+    echo "Name and email are mandatory!";
+    exit;
+}
+
+if(IsInjected($visitor_email))
+{
+    echo "Bad email value!";
+    exit;
+}
+
+$email_from = '';//<== update the email address
+$email_subject = "New Form submission";
+$email_body = "You have received a new message from the user $name.\n".
+    "Here is the message:\n $message".
+    
+$to = "Darren.blackwell21@gmail.com";//<== update the email address
+$headers = "From: $email_from \r\n";
+$headers .= "Reply-To: $visitor_email \r\n";
+//Send the email!
+mail($to,$email_subject,$email_body,$headers);
+//done. redirect to thank-you page.
+header('Location: thank-you.html');
+
+
+// Function to validate against any email injection attempts
+function IsInjected($str)
+{
+  $injections = array('(\n+)',
+              '(\r+)',
+              '(\t+)',
+              '(%0A+)',
+              '(%0D+)',
+              '(%08+)',
+              '(%09+)'
+              );
+  $inject = join('|', $injections);
+  $inject = "/$inject/i";
+  if(preg_match($inject,$str))
+    {
+    return true;
+  }
+  else
+    {
+    return false;
+  }
+}
+   
+?> 
+<!--Begin Parallax-->
+<div class="parallax"></div>
+<div style="height:500px;background-color:white;font-size:16px">
+<div class="parallax"></div>
+<!--End Parallax-->
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-black w3-card" id="myNavbar">
+    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+    <a href="" class="w3-bar-item w3-button w3-padding-large w3-hide-small">GALLERY</a>
+    <a href="#services" class="w3-bar-item w3-button w3-padding-large w3-hide-small">SERVICES</a>
+	<a href="#contact" class="w3-bar-item w3-button w3-padding-large w3-hide-small">CONTACT</a>
+  </div>
+</div>
+
+<!-- Navbar on small screens -->
+<div id="navDemo" class="w3-bar-block w3-black w3-hide w3-hide-large w3-hide-medium w3-top" style="margin-top:46px">
+  <a href="" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+  <a href="" class="w3-bar-item w3-button w3-padding-large">GALLERY</a>
+  <a href="" class="w3-bar-item w3-button w3-padding-large">SERVICES</a>
+  <a href="" class="w3-bar-item w3-button w3-padding-large">CONTACT</a>
+</div>
+
+  <!-- The Heading Section -->
+  <div class="w3-container w3-content w3-center w3-padding-64" style="max-width:800px" id="myHeading">
+    <h2 class="w3-wide">Esthetics & Nails</h2>
+    <p class="w3-opacity"><i>Massage is very important for relaxing</i></p>
+    <p class="w3-justify">We offer full healing and restorative services that allow you to escape and transform into a relaxing and renewed state of being. 
+		Located at XXXXXXXX, the beautiful downtown section of St.Petersburg, 
+		Esthetics & Nails caters to male and female clientele who are looking to indulge themselves in a peaceful and relaxing environment. 
+		With a combined 20 years of experience, our team leaves our clients feeling rejuvenated and incredible.</p>
+<!---->
+<img src="man.jpg" class="w3-image w3-padding-32 w3-circle" width="200" height="300">
+<img src="man.jpg" class="w3-image w3-padding-32 w3-circle" width="200" height="300">
+  <form style="margin:auto;width:60%" action="/action_page.php" target="_blank">
+    <p>Just me, myself and I, exploring the universe of unknownment. I have a heart of love and an interest of lorem ipsum and mauris neque quam blog.
+	I want to share my world with you. Praesent tincidunt sed tellus ut rutrum. 
+	Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.
+	Praesent tincidunt sed tellus ut rutrum. Sed vitae justo condimentum, porta lectus vitae, ultricies congue gravida diam non fringilla.</p>		
+	</form>	
+   <!--Automatic Slideshow-->
+<div class="slideshow-container">
+<div class="mySlides fade">
+  <img src="Cliff.jpg" style="width:100%">
+  <div class="text">""</div>
+</div>
+
+<div class="mySlides fade">
+  <img src="Mountains.jpg" style="width:100%">
+  <div class="text">""</div>
+</div>
+
+<div class="mySlides fade">
+  <img src="Nature.jpg" style="width:100%">
+  <div class="text">""</div>
+</div>
+
+</div>
+<br>
+
+<div style="text-align:center">
+  <span class="dot"></span> 
+  <span class="dot"></span> 
+  <span class="dot"></span> 
+</div>
+
+<script>
+var slideIndex = 0;
+showSlides();
+
+function showSlides() {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("dot");
+    for (i = 0; i < slides.length; i++) {
+       slides[i].style.display = "none";  
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {slideIndex = 1}    
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex-1].style.display = "block";  
+    dots[slideIndex-1].className += " active";
+    setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
+</script>
+  <!-- The SERVICES Section -->
+  <div class="w3-black" id="services">
+    <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
+      <h2 class="w3-wide w3-center">SERVICES</h2>
+      <p class="w3-opacity w3-center"><i>Here's what we have to offer!</i></p><br>
+<!---->	  
+      <div class="w3-row-padding w3-padding-32" style="margin:0 -16px">
+        <div class="w3-third w3-margin-bottom">
+          <img src="facial.jpg" alt="Facials" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-white">
+            <p><b>Facials</b></p>
+            <p class="w3-opacity">Fri 27 Nov 2016</p>
+            <p>Facial massages increase circulation to your facial tissue, resulting in brighter, youthful-looking skin. 
+			Facial massages can also help to lift and firm the skin, reducing the appearance of puffiness and wrinkles. 
+			As an added benefit, a good facial massage reduces stress, leaving you feeling peaceful and relaxed. 
+			Treat yourself to a massage once a day, either in the morning or at night before you go to sleep</p>
+          </div>
+        </div>
+        <div class="w3-third w3-margin-bottom">
+          <img src="nails.jpg" alt="Nail Care" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-white">
+            <p><b>Nail Care</b></p>
+            <p class="w3-opacity">Sat 28 Nov 2016</p>
+            <p>Do you know how to properly clean and cut your nails? It is essential that you do.
+			It may not seem important, but is as important as washing your hair and having a bath/shower.
+			</p>
+          </div>
+        </div>
+        <div class="w3-third w3-margin-bottom">
+          <img src="wax.jpg" alt="Waxing" style="width:100%" class="w3-hover-opacity">
+          <div class="w3-container w3-white">
+            <p><b>Waxing</b></p>
+            <p class="w3-opacity">Sun 29 Nov 2016</p>
+            <p>Waxing is an effective method of removing unwanted hair in both large and small areas.
+			Waxing is one method of depilation, which means that the entire hair shaft is removed from below the skin's surface.
+			It is one of the most effective methods for temporary hair removal.
+			There are many types of waxing techniques, but warm waxing is more effective than most other waxing techniques and is usually performed in a salon.
+			</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+   <!-- The Contact Section -->
+  <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="contact">
+    <h2 class="w3-wide w3-center">CONTACT</h2>
+    <p class="w3-opacity w3-center"><i>Available M-W</i></p>
+    <div class="w3-row w3-padding-32">
+      <div class="w3-col m6 w3-large w3-margin-bottom">
+        <i class="fa fa-map-marker" style="width:30px"></i> St. Petersburg, Fl <br>
+        <i class="fa fa-phone" style="width:30px"></i> Phone: (727) 557-9654<br>
+        <i class="fa fa-envelope" style="width:30px"> </i> Email: Estheticsbyasha@gmail.com<br>
+      </div>
+      <div class="w3-col m6">
+<!-- Start code for the form-->
+ <form action="" target="post">
+          <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
+            <div class="w3-half">
+              <input class="w3-input w3-border" type="text" placeholder="Name" required name="Name">
+            </div>
+            <div class="w3-half">
+              <input class="w3-input w3-border" type="text" placeholder="Email" required name="Email">
+            </div>
+          </div>
+          <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message">
+          <button class="w3-button w3-black w3-section w3-right" type="submit">SEND</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+<!-- End Page Content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-padding-32 w3-center w3-black w3-xlarge">
+  <i class="fa fa-facebook-official w3-hover-opacity"></i>
+  <i class="fa fa-instagram w3-hover-opacity"></i>
+  <i class="fa fa-snapchat w3-hover-opacity"></i>
+  <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+  <i class="fa fa-twitter w3-hover-opacity"></i>
+  <i class="fa fa-linkedin w3-hover-opacity"></i>
+  <p class="w3-medium">Copyright &copy; <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">Esthetics & Nails</a></p>
+</footer>
+
+</body>
+</html>
